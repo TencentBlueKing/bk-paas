@@ -15,7 +15,6 @@ import logging
 
 from django.core.management.base import BaseCommand
 from django.conf import settings
-from django.db.models import Q
 
 from common.constants import API_TYPE_Q
 from esb.bkcore.models import ComponentSystem, ESBBuffetComponent, ESBChannel, SystemDocCategory
