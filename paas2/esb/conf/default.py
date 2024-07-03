@@ -280,5 +280,5 @@ ESB_BUFFET_COMPONENT_CACHE_MAXSIZE = 1000
 ESB_BUFFET_COMPONENT_CACHE_TTL_SECONDS = 300
 
 # 从环境变量获取同步通道数据时豁免的自定义通道列表，格式为：
-# {"CMSI": ["/cmsi/xxxx/", "/cmsi/xxxxx"]}
-EXCLUDE_CUSTOM_CHANNEL_WHEN_SYNC = os.getenv("BK_ESB_EXCLUDE_CUSTOM_CHANNEL_WHEN_SYNC", "")
+# [{"method": "get", "path": "/cmsi/send_xxxx"}]
+EXCLUDE_OFFICIAL_CHANNELS_WHEN_SYNCING = env.list("BK_ESB_EXCLUDE_OFFICIAL_CHANNELS_WHEN_SYNCING", default=[])
