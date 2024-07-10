@@ -12,7 +12,6 @@ specific language governing permissions and limitations under the License.
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
-
 import environ
 from django.conf.global_settings import *  # noqa F403,F401
 
@@ -279,3 +278,7 @@ ESB_ALL_BUFFET_COMPONENTS_CACHE_MAXSIZE = 10
 ESB_ALL_BUFFET_COMPONENTS_CACHE_TTL_SECONDS = 300
 ESB_BUFFET_COMPONENT_CACHE_MAXSIZE = 1000
 ESB_BUFFET_COMPONENT_CACHE_TTL_SECONDS = 300
+
+# 从环境变量获取同步通道数据时豁免的自定义通道列表，格式为：
+# [{"method": "get", "path": "/cmsi/send_xxxx"}]
+EXCLUDE_OFFICIAL_CHANNELS_WHEN_SYNCING = env.list("BK_ESB_EXCLUDE_OFFICIAL_CHANNELS_WHEN_SYNCING", default=[])

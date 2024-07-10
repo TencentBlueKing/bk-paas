@@ -14,6 +14,7 @@ import json
 import logging
 
 from django.core.management.base import BaseCommand
+from django.conf import settings
 
 from common.constants import API_TYPE_Q
 from esb.bkcore.models import ComponentSystem, ESBBuffetComponent, ESBChannel, SystemDocCategory
@@ -243,4 +244,17 @@ class Command(BaseCommand):
         )
 
     def _hide_channels(self, channel_ids):
+        # 官方通道列表，需排除掉豁免的自定义通道
+        exclude_channels_config = settings.EXCLUDE_OFFICIAL_CHANNELS_WHEN_SYNCING
+        if exclude_channels_config:
+            channel_ids_dict = dict.fromkeys(channel_ids, None)
+            for channel in exclude_channels_config:
+                if "method" in channel and "path" in channel:
+                    try:
+                        exclude_channel_id = ESBChannel.objects.get(method=channel["method"], path=channel["path"]).id
+                        channel_ids_dict.pop(exclude_channel_id, None)
+                    except ESBChannel.DoesNotExist:
+                        logger.warning("channel does not exist: method=%s, path=%s", channel["method"], channel["path"])
+                        continue
+            channel_ids = channel_ids_dict.keys()
         ESBChannel.objects.filter(id__in=channel_ids).update(is_hidden=True)
