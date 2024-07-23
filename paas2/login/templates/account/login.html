@@ -175,15 +175,15 @@
             var encrypted = encrypt.encrypt(password);
             $('#password').val(encrypted);
         }
-        $(document).ready(function(){
-             if (ENABLE_PASSWORD_RSA_ENCRYPTED) {
-                 // 避免点击多次登录按钮，导致重复加密
-                 document.getElementById("login-btn").disabled = true;
-                 document.getElementById('login-btn').textContent = "登录中...";
-                 $('#login-form').submit(() => {
-                     rsa_encrypt_password();
-                });
-            }
-        })
+        $(document).ready(function () {
+        if (ENABLE_PASSWORD_RSA_ENCRYPTED) {
+            $('#login-form').submit(() => {
+                rsa_encrypt_password();
+                // 避免点击多次登录按钮，导致重复加密
+                document.getElementById("login-btn").disabled = true;
+                document.getElementById('login-btn').textContent = "登录中...";
+            });
+        }
+    })
     </script>
 </html>
